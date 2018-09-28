@@ -1,6 +1,8 @@
 package com.kbp.security.browser;
 
 import com.kbp.core.properties.SecurityProperties;
+import com.kbp.security.browser.authentication.FailHandler;
+import com.kbp.security.browser.authentication.SuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
@@ -25,12 +27,20 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    private FailHandler failHandler;
+
+    @Autowired
+    private SuccessHandler successHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
                http.formLogin()
                    .loginPage("/auth/require")
                    .loginProcessingUrl("/auth/form")
+                       .successHandler(successHandler)
+                       .failureHandler(failHandler)
                 .and()
                    .authorizeRequests()
                    .antMatchers("/auth/require",

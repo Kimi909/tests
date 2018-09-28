@@ -8,5 +8,11 @@ import lombok.Data;
 @Data
 public class BrowserProperties {
 
+    //默认登录页
     private String loginPage = "/imooc-signIn.html";
+
+    //默认返回值类型
+    private LoginType loginType = LoginType.JSON;
+
+
 }
