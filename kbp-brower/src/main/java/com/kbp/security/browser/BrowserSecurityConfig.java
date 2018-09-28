@@ -1,5 +1,7 @@
 package com.kbp.security.browser;
 
+import com.kbp.core.properties.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,15 +22,23 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         return  new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.formLogin()
+               http.formLogin()
+                   .loginPage("/auth/require")
+                   .loginProcessingUrl("/auth/form")
                 .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated();
+                   .authorizeRequests()
+                   .antMatchers("/auth/require",
+                          securityProperties.getBrowser().getLoginPage()).permitAll()
+                   .anyRequest()
+                   .authenticated()
+                .and()
+                   .csrf().disable();
 
     }
 
