@@ -1,6 +1,7 @@
 package com.kbp.security.browser;
 
 import com.kbp.core.properties.SecurityProperties;
+import com.kbp.core.validate.code.ValidateCodeSecurityConfig;
 import com.kbp.security.browser.authentication.FailHandler;
 import com.kbp.security.browser.authentication.SuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,17 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SuccessHandler successHandler;
 
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+               http.apply(validateCodeSecurityConfig);
+
                http.formLogin()
-                   .loginPage("/auth/require")
-                   .loginProcessingUrl("/auth/form")
+                       .loginPage("/auth/require")
+                        .loginProcessingUrl("/auth/form")
                        .successHandler(successHandler)
                        .failureHandler(failHandler)
                 .and()

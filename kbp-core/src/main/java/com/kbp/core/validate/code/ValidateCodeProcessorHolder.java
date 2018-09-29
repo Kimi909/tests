@@ -27,4 +27,15 @@ public class ValidateCodeProcessorHolder {
         }
         return  processor;
     }
+
+    /**
+     * public ValidateCodeProcessor findValidateCodeProcessor(ValidateCodeType type) {
+     return findValidateCodeProcessor(type.toString().toLowerCase());
+     }
+     * @param type
+     * @return
+     */
+    public ValidateCodeProcessor findValidateCodeProcessor(ValidateCodeType type) throws ValidationException {
+           return  findValidateCodeProcessor(type.toString().toLowerCase());
+    }
 }
