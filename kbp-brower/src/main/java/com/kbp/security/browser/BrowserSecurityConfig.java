@@ -1,5 +1,6 @@
 package com.kbp.security.browser;
 
+import com.kbp.core.mobile.SmsCodeSecurityConfig;
 import com.kbp.core.properties.SecurityProperties;
 import com.kbp.core.validate.code.ValidateCodeSecurityConfig;
 import com.kbp.security.browser.authentication.FailHandler;
@@ -37,10 +38,15 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
+    @Autowired
+    private SmsCodeSecurityConfig smsCodeSecurityConfig;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-               http.apply(validateCodeSecurityConfig);
+               http.apply(validateCodeSecurityConfig)
+                      .and()
+                    .apply(smsCodeSecurityConfig) ;
 
                http.formLogin()
                        .loginPage("/auth/require")
