@@ -9,6 +9,7 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -76,10 +77,10 @@ public abstract  class AbstractValidateCodeProcessor<C extends ValidateCode> imp
      * @param request
      * @param validateCode
      */
-    protected abstract void send(ServletWebRequest request, C validateCode);
+    protected abstract void send(ServletWebRequest request, C validateCode) throws IOException, ServletRequestBindingException;
 
-
-    public  void validate(ServletWebRequest request){
+    @SuppressWarnings("unchecked")
+    public  void check(ServletWebRequest request){
 
         ValidateCodeType processorType = getValidateCodeType(request);
         String sessionKey = getSessionKey(request);

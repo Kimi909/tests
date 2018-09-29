@@ -1,8 +1,11 @@
 package com.kbp.core.sms;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Administrator on 2018/9/29.
  */
+@Component
 public class DefaultSmsCodeSender implements SmsCodeSender {
 
     @Override
