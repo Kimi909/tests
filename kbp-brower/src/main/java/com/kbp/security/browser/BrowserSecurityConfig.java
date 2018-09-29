@@ -49,13 +49,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                     .apply(smsCodeSecurityConfig) ;
 
                http.formLogin()
-                       .loginPage("/auth/require")
+                     //  .loginPage("/auth/require")
                         .loginProcessingUrl("/auth/form")
                        .successHandler(successHandler)
                        .failureHandler(failHandler)
                 .and()
                    .authorizeRequests()
-                   .antMatchers("/auth/require","/code/*",
+                   .antMatchers("/auth/require","/code/*","/oauth/*",
                           securityProperties.getBrowser().getLoginPage()).permitAll()
                    .anyRequest()
                    .authenticated()
